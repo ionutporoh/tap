@@ -1,4 +1,4 @@
-
+# iterative search
 def search(haystack, needle):
     c = 0
     for e in haystack:
@@ -7,7 +7,9 @@ def search(haystack, needle):
         c += 1
     return False
 
+
 # binary search
+listPos = []
 
 
 def binarySearch(haystack, needle, low, high):
@@ -16,7 +18,10 @@ def binarySearch(haystack, needle, low, high):
 
         # lucky find
         if int(haystack[mid]) == int(needle):
-            return mid
+            listPos.append(mid)
+            # remove found element and try again
+            haystack.remove(haystack[mid])
+            return binarySearch(haystack, needle, 0, len(number_list) - 1)
         # lower than middle
         # recursive run
         elif haystack[mid] > needle:
@@ -52,10 +57,14 @@ if find != False:
 else:
     print("we didn't find the element: ", needle)
 
+# order list asc for binary search
 number_list.sort()
 bSearch = binarySearch(number_list, needle, 0, len(number_list)-1)
 
-if bSearch < 0:
+print(listPos)
+
+if len(listPos) == 0:
     print("binary search did not found element")
 else:
-    print("binary search EVRIKA!!!!")
+    print("binary search EVRIKA!!!! We found element {0} times".format(
+        len(listPos)))
